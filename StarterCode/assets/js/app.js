@@ -61,6 +61,17 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
     return circlesGroup;
   }
 
+// function used for updating circles labels group with a transition to
+// new circles
+function renderCircleLabels(circleLabelsGroup, newXScale, chosenXAxis) {
+
+    circleLabelsGroup.transition()
+      .duration(1000)
+      .attr("cx", d => newXScale(d[chosenXAxis]));
+  
+    return circleLabelsGroup;
+  }
+
   // function used for updating circles group with new tooltip
 function updateToolTip(chosenXAxis, circlesGroup) {
 
@@ -134,14 +145,20 @@ d3.csv("/assets/data/data.csv").then(function(CSVdata) {
       .append("circle")
       .attr("cx", d => xLinearScale(d[chosenXAxis]))
       .attr("cy", d => yLinearScale(d.obesity))
-      .attr("r", 20)
+      .attr("r", 15)
       .attr("fill", "lightblue")
-      .attr("opacity", ".5");
-
-    // Add state abbreviations to cirlces
-    // circlesGroup.append('text')
-    //     .text(d => d.abbr)
-    //     .attr("font-size", "10px")
+      .attr("opacity", ".75");
+    
+      // Add state abbreviations to cirlces
+    var circleLabelsGroup = chartGroup.selectAll("text")
+        .data(CSVdata)
+        .enter()
+        .append("text")
+        .attr("x", d => xLinearScale(d[chosenXAxis]) - 7.5)
+        .attr("y", d => yLinearScale(d.obesity) + 3.5)
+        .text(d => d.abbr)
+        .attr("font-size", "10px")
+        .attr("color", "black");
   
     // Create group for three x-axis labels
     var xLabelsGroup = chartGroup.append("g")
@@ -175,11 +192,11 @@ d3.csv("/assets/data/data.csv").then(function(CSVdata) {
       .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
       .classed("axis-text", true)
-      .text("Obese (%)");
+      .text("Obesity (%)");
   
     // updateToolTip function above csv import
     var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
-  
+
     // x axis labels event listener
     xLabelsGroup.selectAll("text")
       .on("click", function() {
@@ -200,7 +217,7 @@ d3.csv("/assets/data/data.csv").then(function(CSVdata) {
   
           // updates circles with new x values
           circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
-  
+          circleLabelsGroup = renderCircleLabels(circleLabelsGroup, xLinearScale, chosenXAxis);
           // updates tooltips with new info
           circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
   
@@ -215,8 +232,7 @@ d3.csv("/assets/data/data.csv").then(function(CSVdata) {
             incomeLabel
               .classed("active", false)
               .classed("inactive", true);
-          }
-          else if (chosenXAxis === "age") {
+          } else if (chosenXAxis === "age") {
             povertyLabel
               .classed("active", false)
               .classed("inactive", true);
@@ -226,8 +242,7 @@ d3.csv("/assets/data/data.csv").then(function(CSVdata) {
             incomeLabel
               .classed("active", false)
               .classed("inactive", true);
-          }
-          else {
+          } else {
             povertyLabel
               .classed("active", false)
               .classed("inactive", true);
