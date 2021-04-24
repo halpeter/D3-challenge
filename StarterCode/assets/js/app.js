@@ -67,7 +67,7 @@ function renderCircleLabels(circleLabelsGroup, newXScale, chosenXAxis) {
 
     circleLabelsGroup.transition()
       .duration(1000)
-      .attr("cx", d => newXScale(d[chosenXAxis]));
+      .attr("x", d => newXScale(d[chosenXAxis]));
   
     return circleLabelsGroup;
   }
@@ -149,8 +149,8 @@ d3.csv("/assets/data/data.csv").then(function(CSVdata) {
       .attr("fill", "lightblue")
       .attr("opacity", ".75");
     
-      // Add state abbreviations to cirlces
-    var circleLabelsGroup = chartGroup.selectAll("text")
+    // Add state abbreviations to cirlces
+    var circleLabelsGroup = chartGroup.append("g").selectAll("text")
         .data(CSVdata)
         .enter()
         .append("text")
