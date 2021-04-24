@@ -25,10 +25,10 @@ Using D3 techniques, I created a scatter plot that represents each state with ci
 ### Visualizations
 
 Poverty compared with Obesity
-![Poverty-Obesity](Images/PovertyVsObesity.jpg)
+![Poverty-Obesity](Images/PovertyVsObesity.png)
 
 Median Age compared with Obesity
-![Age-Obesity](Images/AgeVsObesity.jpg)
+![Age-Obesity](Images/AgeVsObesity.png)
 
 Median Household Income with Obesity
-![Income-Obesity](Images/IncomeVsObesity.jpg)
+![Income-Obesity](Images/IncomeVsObesity.png)
