@@ -1,4 +1,4 @@
-# D3 Homework - Data Journalism and D3
+# D3 Analysis - Data Journalism and D3
 
 ## Background
 
